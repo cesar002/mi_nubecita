@@ -1,7 +1,7 @@
 <?php
+
 require('../vendor/autoload.php');
 
-use Services\InitFileData;
+use Services\DateService;
 
-$datos = InitFileData::getIniFileData();
-echo($datos['db_name']);
+echo(DateService::getCurrentDate());

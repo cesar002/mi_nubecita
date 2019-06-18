@@ -24,7 +24,8 @@ class InitFileData{
     public static function getIniFileData() : ?array{
         try{
             $root = $_SERVER['DOCUMENT_ROOT'];
-            return self::$datosInit = parse_ini_file($root.'/mi_nubecita/config/config.ini');
+            $data = self::$datosInit = parse_ini_file($root.'/mi_nubecita/config/config.ini');
+            return $data;
         }catch(\Error $err){
             return null;
         }

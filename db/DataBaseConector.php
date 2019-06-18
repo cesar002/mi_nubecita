@@ -8,6 +8,8 @@
 
  namespace DataBase;
 
+ use Services\InitFileData;
+
 class DataBaseConector{
     /**
      * variable de tipo PDO que almacena una instancia de conexión con la base de datos
@@ -33,11 +35,12 @@ class DataBaseConector{
      */
     public function conectar() : void{
         try{
-            if($dbData = null){
+            if($this->dbData == null){
                 throw new \Exception("Error al leer los datos del archivo de configuración");
             }
-
-            $this->conector = new \PDO("mysql:dbname=".$dbData["db_name"]."; host=".$dbData["host"], $dbData["db_user"], $dbData["db_pass"]);
+            $wea = $this->dbData;
+            //$this->conector = new \PDO("mysql:dbname=".$this->dbData["db_name"]."; host=".$this->dbData["host"], $this->dbData["db_user"], $this->dbData["db_pass"]);
+            $this->conector = new \PDO("mysql:dbname=".$this->dbData["db_name"]."; host = ".$this->dbData["host"], $this->dbData["db_user"], $this->dbData["db_pass"]);
             $this->conector->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }catch(\PDOException $pdoex){
             //aqui deben ir logs
@@ -49,10 +52,10 @@ class DataBaseConector{
     /**
      * Retorna la instancia de conexión PDO
      *
-     * @return \PDO|null
+     * @return void
      */
-    public function getDataBaseConector() : ?\PDO{
-        return $this->conector();
+    public function getDataBaseConector(){
+        return $this->conector;
     }
 
     /**
@@ -61,7 +64,7 @@ class DataBaseConector{
      * @return void
      */
     private function readInitFile() : void{
-        $this->dbData = Services\InitFileData::getIniFileData();
+        $this->dbData = InitFileData::getIniFileData();
     }
     
 
