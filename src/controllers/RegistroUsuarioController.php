@@ -3,6 +3,9 @@
 namespace Controllers;
 
 use DataBase\DBController;
+use Controllers\TokensController;
+use Services\SendEmail;
+use Services\TokenGenerator;
 
 class RegistroUsuarioController{
     /**
@@ -44,7 +47,17 @@ class RegistroUsuarioController{
 
             $this->dbConector->execSQLQuery("INSERT INTO limites_usuarios_almacenaje(id_usuario, id_limite) VALUES ($idInserted, 1)");
 
+            $token = TokenGenerator::generateOpenSSLToken(10);
+            $tokenController = new TokensController();
+            
+            if(!$tokenController->registrarTokenVerificadorCuenta($token, $idInserted, $correo)){
+                throw new \Exception("Error al registrar el token de verificación");
+            }
+
             $this->dbConector->commitTransaction();
+
+            SendEmail::sendEmailVerificationAccount($correo, $token);
+
             return [
                 "status" => 1,
                 "mensaje" => "registro éxitoso"

@@ -1,7 +1,7 @@
 <?php
-use Controllers\RegistroUsuarioController;
-
 require('../vendor/autoload.php');
+
+use Controllers\RegistroUsuarioController;
 
 $method = $_SERVER["REQUEST_METHOD"];
 
@@ -18,16 +18,19 @@ if($method == "POST"){
         //redirigir y enviar mensaje de que las contraseñas estan incorrectas
     }
 
-    $controller = new Controllers\RegistroUsuarioController();
+    $controller = new RegistroUsuarioController();
 
     $result = $controller->registrarUsuario($email, $pass);
 
-    if($result["status"] = 1){
-
-    }else{
-        
+    switch($result["status"]){
+        case 1:
+        //redirigir a pagina de correcto
+        break;
+        case 2:
+        //contraseña existente
+        break;
+        default:
     }
-
 }else{
-
+    //redirigir a error 404
 }
