@@ -24,14 +24,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     switch($loginDatos["status"]){
         case 1:
             header("Correcto", true, 200);
+            echo json_encode($loginDatos);
         break;
-
         case 2:
-
+            header("Datos no encontrados", true, 409);
+            echo json_encode($loginDatos);
         break;
-
         case 0:
-
+            header("Error del servidor", true, 500);
+            echo json_encode($loginDatos);
         break;
         default:
     }
