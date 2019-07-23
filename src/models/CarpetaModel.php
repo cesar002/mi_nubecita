@@ -9,7 +9,7 @@ class CarpetaModel{
     private $pathCarpeta;
     private $fechaCreacion;
 
-    public function __construct(int $idCarpeta, int $idNube, string $nombreCarpeta, string $pathCarpeta, string $fechaCreacion){
+    public function construir(int $idCarpeta, int $idNube, string $nombreCarpeta, string $pathCarpeta, string $fechaCreacion){
         $this->idCarpeta =$idCarpeta;
         $this->idNube;
         $this->nombreCarpeta = $nombreCarpeta;
@@ -53,7 +53,7 @@ class CarpetaModel{
         return $this->fechaCreacion;
     }
 
-    public function toJSON() : array{
+    public function toArray() : array{
         return [
             "id_carpeta" => $this->idCarpeta,
             "id_nube" => $this->idNube,

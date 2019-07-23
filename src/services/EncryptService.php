@@ -3,29 +3,33 @@
 namespace Services;
 
 class EncryptService{
-    private static $key = "jlcsrCA58*";
+    private static $secretKey = "jlcsrCA58*";
+    private static $iv = "91194";
 
     public static function encrypt(string $text) : string{
-        $result = '';
-        for($i=0; $i<strlen($text); $i++) {
-            $char = substr($text, $i, 1);
-            $keychar = substr(self::$key, ($i % strlen(self::$key))-1, 1);
-            $char = chr(ord($char)+ord($keychar));
-            $result.=$char;
-        }
-        return base64_encode($result);
+        return self::encrypt_decrypt('encrypt', $text);
     }
 
     public static function decrypt(string $text) : string{
-        $result = '';
-        $text = base64_decode($text);
-        for($i=0; $i<strlen($text); $i++) {
-            $char = substr($text, $i, 1);
-            $keychar = substr(self::$key, ($i % strlen(self::$key))-1, 1);
-            $char = chr(ord($char)-ord($keychar));
-            $result.=$char;
-        }
-        return $result;
+        return self::encrypt_decrypt('decrypt', $text);
     }
+
+    private static function encrypt_decrypt($action, $string) {
+        $output = false;
+        $encrypt_method = "AES-256-CBC";
+        // hash
+        $key = hash('sha256', self::$secretKey);
+        
+        // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+        $iv = substr(hash('sha256', self::$iv), 0, 16);
+        if ( $action == 'encrypt' ) {
+            $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+            $output = base64_encode($output);
+        } else if( $action == 'decrypt' ) {
+            $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+        }
+        return $output;
+    }
+
 
 }

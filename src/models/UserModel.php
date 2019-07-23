@@ -9,7 +9,7 @@ class UserModel{
     private $cloudStorageID;
     private $limiteAlmacenaje;
 
-    public function __construct(int $idUser, string $email, string $cloudStorageName, int $cloudStorageID, int $limiteAlmacenaje){
+    public function construir(int $idUser, string $email, string $cloudStorageName, int $cloudStorageID, int $limiteAlmacenaje){
         $this->idUser = $idUser;
         $this->email = $email;
         $this->cloudStorageName = $cloudStorageName;
