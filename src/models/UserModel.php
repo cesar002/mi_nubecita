@@ -7,12 +7,14 @@ class UserModel{
     private $email;
     private $cloudStorageName;
     private $cloudStorageID;
+    private $limiteAlmacenaje;
 
-    public function __construct(int $idUser, string $email, string $cloudStorageName, int $cloudStorageID){
+    public function __construct(int $idUser, string $email, string $cloudStorageName, int $cloudStorageID, int $limiteAlmacenaje){
         $this->idUser = $idUser;
         $this->email = $email;
         $this->cloudStorageName = $cloudStorageName;
         $this->cloudStorageID = $cloudStorageID;
+        $this->limiteAlmacenaje = $limiteAlmacenaje;
     }
 
     public function setIdUser(int $idUser) : void{
@@ -45,6 +47,14 @@ class UserModel{
 
     public function getCloudStorageID() : int{
         return $this->cloudStorageID;
+    }
+
+    public function setLimiteAlmacenaje(int $limiteAlmacenaje) : void{
+        $this->limiteAlmacenaje = $limiteAlmacenaje;
+    }
+
+    public function getLimiteAlmacenaje() : int {
+        return $this->limiteAlmacenaje;
     }
 
 
