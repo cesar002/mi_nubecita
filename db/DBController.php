@@ -89,6 +89,26 @@ class DBController{
     }
 
     /**
+     * Ejecuta una sentencia SELECT que devuelva un resultado y lo retorna
+     *
+     * @param string $query
+     * sentencia SELECT
+     * @return array|null
+     */
+    public function getOneDataFromSelectQuery(string $query) : ?array{
+        try{
+            $res = $this->conector->getDataBaseConector()->query($query);
+            return $res->fetch(\PDO::FETCH_ASSOC);
+        }catch(\Exception $e){
+            return null;
+        }catch(\Error $err){
+            return null;
+        }catch(\PDOException $pdoerr){
+            return null;
+        }
+    }
+
+    /**
      * Inicia la transaccion
      *
      * @return void

@@ -4,10 +4,12 @@ namespace Controllers;
 use Services\LogService;
 use Services\InitFileData;
 use DataBase\DBController;
-use ModelsUserModel;
 use Models\UserModel;
 
-class NubeStorageController{
+/**
+ * Clase que permite subir archivos al cloudStorage
+ */
+class UploadStorageController{
 
     private $dbConnector;
     private $pathStorage;
@@ -122,11 +124,14 @@ class NubeStorageController{
      * @param string $pathUpload
      * path del cloudStore donde se va a guardar el archivo
      * @param object $fileTemp
+     * archivo con nombre temporal
      * @param object $file
+     * variable de tipo $_FILE que haga referencia solo al archivo
      * @return array
      */
     public function uploadFile(UserModel $user,string $pathUpload, object $fileTemp, object $file) : array{
-        $sizeFile = (filesize($file) * 1)/1000000;
+        $this->dbConnector = new DBController();
+        $sizeFile = (filesize($fileTemp) * 1)/1000000;
 
         if($sizeFile > $user->getLimiteAlmacenaje()){
             return[
@@ -135,12 +140,48 @@ class NubeStorageController{
             ];
         }
 
-        if(move_uploaded_file($fileTemp, $pathUpload.$file)){
+        
+        try{
+            $this->dbConnector->startTransaction();
+
+            $fileName = $file['name'];
+            $uploadFile = $pathUpload.basename($file['name']);
+            $typeFile = pathinfo($uploadFile)['extension'];
+            $idCarpeta = $this->getIdCarpetaUsuario($user, $pathUpload);
+            $insert = "INSERT INTO archivos_subidos(id_carpeta, nombre_archivo, tipo_archivo, size_file) VALUES ($idCarpeta, '$fileName', '$typeFile', $sizeFile)";
+    
+            $this->dbConnector->execSQLQuery($insert);
+        }catch(\Error $err){
+            $this->dbConnector->rollBackTransaction();
+            return [
+                "status" => 0,
+                "mensaje" => "error al subir el archivo",
+            ];
+        }catch(\Exception $e){
+            $this->dbConnector->rollBackTransaction();
+            return [
+                "status" => 0,
+                "mensaje" => "error al subir el archivo",
+            ];
+        }catch(\PDOException $pdoerr){
+            $this->dbConnector->rollBackTransaction();
+            return [
+                "status" => 0,
+                "mensaje" => "error al subir el archivo",
+            ];
+        }
+
+        if(move_uploaded_file($fileTemp, $uploadFile)){
+
+            $this->dbConnector->commitTransaction();
+
             return [
                 "status" => 1,
                 "mensaje" => "se subió el archivo correctamente",
             ];    
         }
+
+        $this->dbConnector->rollBackTransaction();
         return [
             "status" => 0,
             "mensaje" => "error al subir el archivo",
@@ -163,30 +204,16 @@ class NubeStorageController{
                         INNER JOIN carpetas_usuarios AS cu ON cu.id_nube = nu.id_nube
                     WHERE us.id_usuario = $idUser AND cu.path_carpeta = '$pathFolder'";
 
-        return 0;
+        $this->dbConnector = new DBController();
+        $this->dbConnector->connect();
+        $res = $this->dbConnector->getOneDataFromSelectQuery($sqlQuery);
+
+        if (is_null($res)){
+            return -1;
+        }
+
+        return $res["id_carpeta"];
     }
-
-
-    // public function createFolder(string $folderName) : bool{
-    //     try {
-    //         $serverPath = InitFileData::getInitData();
-    //         $foldePath = $serverPath["cloudStorage"].$$folderName;
-    //         mkdir($foldePath);
-    //     } catch (\Exception $e) {
-    //         LogService::escribirLog("NubeStorageController.createFolder() - ".$e->getMessage());
-    //         return false;
-    //     }catch(\Error $err){
-    //         LogService::escribirLog("NubeStorageController.createFolder() - ".$e->getMessage());
-    //         return false;
-    //     }
-    // }
-
-    // public function folderExist(string $folderName) : bool{
-        
-    //     $serverPath = InitFileData::getInitData();
-    //     return file_exists($serverPath["cloudStorage"].$folderName);
-    // }
-
 
 
 }
