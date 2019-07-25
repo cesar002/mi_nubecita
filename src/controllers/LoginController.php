@@ -3,6 +3,7 @@ namespace Controllers;
 
 use DataBase\DBController;
 use Models\UserModel;
+use Services\JWTAuth;
 
 /**
  * Clase que controla el login del usuario
@@ -40,12 +41,13 @@ class LoginController{
                 ];
             }
 
-            $_SESSION["email_usuario"] = $datosUsuarios["correo"];
-            $_SESSION["user_model"] = $this->getUserModel($email);
+            $user = $this->getUserModel($email);
+            $token = JWTAuth::generateAuthToken($user);
             
             return[
                 "status" => 1,
-                "mensaje" => "correcto"
+                "mensaje" => "correcto",
+                "autorizacion_token" => $token,
             ];
         }catch(\Exception $e){
             return [

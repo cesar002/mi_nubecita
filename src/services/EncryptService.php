@@ -2,9 +2,11 @@
 
 namespace Services;
 
+use Utils\constants;
+
 class EncryptService{
-    private static $secretKey = "jlcsrCA58*";
-    private static $iv = "91194";
+    private static $secretKey =  KEY_ENCRYPT_SERVICE;
+    private static $iv = IV;
 
     public static function encrypt(string $text) : string{
         return self::encrypt_decrypt('encrypt', $text);

@@ -1,15 +1,18 @@
 <?php
 require('../vendor/autoload.php');
-session_start();
+// session_start();
 
-if(!isset($_SESSION["email_usuario"])){
+use Controllers\LoginController;
+$login = new LoginController();
+
+
+if(!isset($_SERVER['HTTP_AUTORIZACION_TOKEN'])){
     header("Sesión existente", true, 503);
     echo json_encode(["status" => 3]);
     return;
 }
 
-use Controllers\LoginController;
-$login = new LoginController();
+$jwtToken = $_SERVER['HTTP_AUTORIZACION_TOKEN'];
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
