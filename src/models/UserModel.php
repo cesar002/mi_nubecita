@@ -9,14 +9,16 @@ class UserModel{
     private $cloudStorageID;
     private $limiteAlmacenaje;
     private $tipoLimite;
+    private $idPapelera;
 
-    public function construir(string $idUser, string $email, string $cloudStorageName, string $cloudStorageID, int $limiteAlmacenaje, string $tipoLimite){
+    public function construir(string $idUser, string $email, string $cloudStorageName, string $cloudStorageID, int $limiteAlmacenaje, string $tipoLimite, string $idPapelera){
         $this->idUser = $idUser;
         $this->email = $email;
         $this->cloudStorageName = $cloudStorageName;
         $this->cloudStorageID = $cloudStorageID;
         $this->limiteAlmacenaje = $limiteAlmacenaje;
         $this->tipoLimite = $tipoLimite;
+        $this->idPapelera;
     }
 
     public function setIdUser(string $idUser) : void{
@@ -67,14 +69,23 @@ class UserModel{
         return $this->tipoLimite;
     }
 
+    public function getIdPapelera() : string {
+        return $this->idPapelera;
+    }
+
+    public function setIdPapelera(string $idPapelera) : void{
+        $this->idPapelera = $idPapelera;
+    }
+
     public function toArray() : array{
         return [
-            "idUserHash" => $this->idUser,
+            "idUser" => $this->idUser,
             "email" => $this->email,
             "cloudStoreName" => $this->cloudStorageNamel,
-            "cloudeStoreIddHash" => $this->cloudStorageID,
+            "cloudeStoreId" => $this->cloudStorageID,
             "limite almacenaje" => $this->limiteAlmacenaje,
             "tipoLimite" => $this->tipoLimite,
+            "idPapelera" => $this->idPapelera,
         ];
     }
 

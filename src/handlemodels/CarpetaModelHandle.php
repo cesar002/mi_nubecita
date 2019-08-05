@@ -33,7 +33,7 @@ class CarpetaModelHandle{
         $carpetas = [];
         foreach($result as $row){
             $carpetaM = new CarpetaModel();
-            $carpetaM->construir(EncryptService::encrypt($row["id_carpeta"]), EncryptService::encrypt($row["id_nube"]), $row["nombre_carpeta"], EncryptService::encrypt($row["path_carpeta"]), $row["fecha_creacion"]);
+            $carpetaM->construir(EncryptService::encrypt($row["id_carpeta"]), EncryptService::encrypt($row["id_nube"]), $row["nombre_carpeta"], EncryptService::encrypt($row["path_carpeta"]), $row["fecha_creacion"], $row["activo"]);
             array_push($carpetas, $carpetaM);
         }
         
@@ -67,7 +67,7 @@ class CarpetaModelHandle{
         $carpetas = [];
         foreach($result as $row){
             $carpetaM = new CarpetaModel();
-            $carpetaM->construir(EncryptService::encrypt($row["id_carpeta"]), EncryptService::encrypt($row["id_nube"]), $row["nombre_carpeta"], EncryptService::encrypt($row["path_carpeta"]), $row["fecha_creacion"]);
+            $carpetaM->construir(EncryptService::encrypt($row["id_carpeta"]), EncryptService::encrypt($row["id_nube"]), $row["nombre_carpeta"], EncryptService::encrypt($row["path_carpeta"]), $row["fecha_creacion"], $row["activo"]);
             array_push($carpetas, $carpetaM);
         }
         

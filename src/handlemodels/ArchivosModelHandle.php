@@ -34,7 +34,7 @@ class ArchivosModelHandle{
         $archivos = [];
         foreach($result as $row){
             $archivoM = new ArchivoModel();
-            $archivoM->construir(EncryptService::encrypt($row["id_archivo"]), EncryptService::encrypt($row["id_carpeta"]), $row["nombre_archivo"], $row["tipo_archivo"], $row["size_file"], $row["fecha_subida"]);
+            $archivoM->construir(EncryptService::encrypt($row["id_archivo"]), EncryptService::encrypt($row["id_carpeta"]), $row["nombre_archivo"], $row["tipo_archivo"], $row["size_file"], $row["fecha_subida"], $row["activo"]);
             array_push($archivos, $archivoM);
         }
 
@@ -69,7 +69,7 @@ class ArchivosModelHandle{
         $archivos = [];
         foreach($result as $row){
             $archivoM = new ArchivoModel();
-            $archivoM->construir(EncryptService::encrypt($row["id_archivo"]), EncryptService::encrypt($row["id_carpeta"]), $row["nombre_archivo"], $row["tipo_archivo"], $row["size_file"], $row["fecha_subida"]);
+            $archivoM->construir(EncryptService::encrypt($row["id_archivo"]), EncryptService::encrypt($row["id_carpeta"]), $row["nombre_archivo"], $row["tipo_archivo"], $row["size_file"], $row["fecha_subida"], $row["activo"]);
             array_push($archivos, $archivoM);
         }
 

@@ -12,7 +12,7 @@ class CarpetaEliminadaModel{
     private $borradoDef;
     private $activo;
 
-    public function construir(int $idCarpetaEliminada, int $idPapelera, int $idCarpeta, string $fechaBorradoTemp, bool $borradoTemp, string $fechaBorradoDef, bool $borradoDef, bool $activo){
+    public function construir(string $idCarpetaEliminada, string $idPapelera, string $idCarpeta, string $fechaBorradoTemp, bool $borradoTemp, string $fechaBorradoDef, bool $borradoDef, bool $activo){
         $this->idCarpetaEliminada = $idCarpetaEliminada;
         $this->idPapelera = $idPapelera;
         $this->idCarpeta = $idCarpeta;
@@ -23,27 +23,27 @@ class CarpetaEliminadaModel{
         $this->activo = $activo;
     }
 
-    public function setidCarpetaEliminada(int $idCarpetaEliminada) : void{
+    public function setidCarpetaEliminada(string $idCarpetaEliminada) : void{
         $this->idCarpetaEliminada = $idCarpetaEliminada;
     }
 
-    public function getidCarpetaEliminada() : int{
+    public function getidCarpetaEliminada() : string{
         return $this->idCarpetaEliminada;
     }
 
-    public function setIdPapelera(int $idPapelera) : void{
+    public function setIdPapelera(string $idPapelera) : void{
         $this->idPapelera = $idPapelera;
     }
 
-    public function getIdPapelera() : int{
+    public function getIdPapelera() : string{
         return $this->idPapelera;
     }
 
-    public function setidCarpeta(int $idCarpeta) : void{
+    public function setidCarpeta(string $idCarpeta) : void{
         $this->idCarpeta = $idCarpeta;
     }
 
-    public function getidCarpeta() : int{
+    public function getidCarpeta() : string{
         return $this->idCarpeta;
     }
 

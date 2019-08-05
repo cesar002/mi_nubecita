@@ -8,13 +8,15 @@ class CarpetaModel{
     private $nombreCarpeta;
     private $pathCarpeta;
     private $fechaCreacion;
+    private $activo;
 
-    public function construir(String $idCarpeta, string $idNube, string $nombreCarpeta, string $pathCarpeta, string $fechaCreacion){
+    public function construir(String $idCarpeta, string $idNube, string $nombreCarpeta, string $pathCarpeta, string $fechaCreacion, bool $activo){
         $this->idCarpeta =$idCarpeta;
         $this->idNube = $idNube;
         $this->nombreCarpeta = $nombreCarpeta;
         $this->pathCarpeta = $pathCarpeta;
         $this->fechaCreacion = $fechaCreacion;
+        $this->activo = $activo;
     }
 
     public function setIdCarpeta(string $idCarpeta):void{
@@ -57,13 +59,22 @@ class CarpetaModel{
         return $this->fechaCreacion;
     }
 
+    public function getActivo() : bool{
+        return $this->activo;
+    }
+
+    public function setActivo(bool $activo) : void {
+        $this->activo = $activo;
+    }
+
     public function toArray() : array{
         return [
-            "idCarpetaHash" => $this->idCarpeta,
-            "idNubeHash" => $this->idNube,
+            "idCarpeta" => $this->idCarpeta,
+            "idNube" => $this->idNube,
             "nombreCarpeta" => $this->nombreCarpeta,
             "pathCarpeta" => $this->pathCarpeta,
             "fechaCreacion" => $this->fechaCreacion,
+            "activo" => $this->activo,
         ];
     }
 

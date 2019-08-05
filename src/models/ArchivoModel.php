@@ -9,14 +9,16 @@ class ArchivoModel{
     private $tipoArchivo;
     private $size;
     private $fechaSubida;
+    private $activo;
 
-    public function construir(string $idArchivo, string $idCarpeta, string $nombreArchivo, string $tipoArchivo, int $size, string $fechaSubida){
+    public function construir(string $idArchivo, string $idCarpeta, string $nombreArchivo, string $tipoArchivo, int $size, string $fechaSubida, bool $activo){
         $this->idArchivo = $idArchivo;
         $this->idCarpeta = $idCarpeta;
         $this->nombreArchivo = $nombreArchivo;
         $this->tipoArchivo = $tipoArchivo;
         $this->size = $size;
         $this->fechaSubida = $fechaSubida;
+        $this->activo = $activo;
     }
 
     public function setIdArchivo(string $idArchivo) : void{
@@ -67,6 +69,14 @@ class ArchivoModel{
         return $this->fechaSubida;
     }
 
+    public function setActivo(bool $activo) : void{
+        $this->activo = $activo;
+    }
+
+    public function getActivo() : bool{
+        return $this->activo;
+    }
+
     public function toArray() : array{
         return [
             "idArchivo" => $this->idArchivo,
@@ -75,6 +85,7 @@ class ArchivoModel{
             "tipoArchivo" => $this->tipoArchivo,
             "size" => $this->size,
             "fechaSubida" => $this->fechaSubida,
+            "activo" => $this->activo,
         ];
     }
 
