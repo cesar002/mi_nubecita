@@ -10,7 +10,7 @@ class ArchivoModel{
     private $size;
     private $fechaSubida;
 
-    public function construir(int $idArchivo, int $idCarpeta, string $nombreArchivo, string $tipoArchivo, string $size, string $fechaSubida){
+    public function construir(string $idArchivo, string $idCarpeta, string $nombreArchivo, string $tipoArchivo, int $size, string $fechaSubida){
         $this->idArchivo = $idArchivo;
         $this->idCarpeta = $idCarpeta;
         $this->nombreArchivo = $nombreArchivo;
@@ -19,19 +19,19 @@ class ArchivoModel{
         $this->fechaSubida = $fechaSubida;
     }
 
-    public function setIdArchivo(int $idArchivo) : void{
+    public function setIdArchivo(string $idArchivo) : void{
         $this->idArchivo = $idArchivo;
     }
 
-    public function getIdArchivo() : int {
+    public function getIdArchivo() : string {
         return $this->idArchivo;
     }
 
-    public function setIdCarpeta(int $idCarpeta) : void{
+    public function setIdCarpeta(string $idCarpeta) : void{
         $this->idCarpeta = $idCarpeta;
     }
 
-    public function getIdCarpeta() : int{
+    public function getIdCarpeta() : string{
         return $this->idCarpeta;
     }
 
@@ -51,11 +51,11 @@ class ArchivoModel{
         return $this->tipoArchivo;
     }
 
-    public function setSize(string $size) : void{
+    public function setSize(int $size) : void{
         $this->size = $size;
     }
 
-    public function getSize() : string{
+    public function getSize() : int{
         return $this->size;
     }
 
@@ -69,12 +69,12 @@ class ArchivoModel{
 
     public function toArray() : array{
         return [
-            "id_archivo" => $this->idArchivo,
-            "id_carpeta" => $this->idCarpeta,
-            "nombre_archivo" => $this->nombreArchivo,
-            "tipo_archivo" => $this->tipoArchivo,
+            "idArchivo" => $this->idArchivo,
+            "idCarpeta" => $this->idCarpeta,
+            "nombreArchivo" => $this->nombreArchivo,
+            "tipoArchivo" => $this->tipoArchivo,
             "size" => $this->size,
-            "fecha_subida" => $this->fechaSubida,
+            "fechaSubida" => $this->fechaSubida,
         ];
     }
 

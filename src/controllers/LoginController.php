@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use DataBase\DBController;
+use Services\UserModelGenerator;
 use Models\UserModel;
 use Services\JWTAuth;
 
@@ -41,7 +42,7 @@ class LoginController{
                 ];
             }
 
-            $user = $this->getUserModel($email);
+            $user = UserModelGenerator::generateUserModel($email, $password);
             $token = JWTAuth::generateAuthToken($user);
             
             return[
@@ -65,15 +66,6 @@ class LoginController{
                     "mensaje" => "Error del servidor"
                 ];
         }
-    }
-
-    
-    private function getUserModel(string $email) : UserModel{
-        $this->dbConector = new DBController();
-
-        $user = new UserModel();
-
-        return $user;
     }
 
 }

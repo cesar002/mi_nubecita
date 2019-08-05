@@ -89,13 +89,13 @@ class CarpetaEliminadaModel{
 
     public function toArray() : array{
         return[
-            "id_carpeta_eliminada" => $this->idCarpetaEliminada,
-            "id_papelera" => $this->idPapelera,
-            "id_carpeta" => $this->idCarpeta,
-            "fecha_borrado_temp" => $this->fechaBorradoTemp,
-            "borrado_temp" => $this->borradoTemp,
-            "fecha_borrado_def" => $this->fechaBorradoDef,
-            "borrado_def" => $this->borradoDef,
+            "idCarpetaEliminada" => $this->idCarpetaEliminada,
+            "idPapelera" => $this->idPapelera,
+            "idCarpeta" => $this->idCarpeta,
+            "fechaBorradoTemp" => $this->fechaBorradoTemp,
+            "borradoTemp" => $this->borradoTemp,
+            "fechaBorradoDef" => $this->fechaBorradoDef,
+            "borradoDef" => $this->borradoDef,
             "activo" => $this->activo,
         ];
     }

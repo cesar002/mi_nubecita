@@ -7,7 +7,7 @@ use Models\UserModel;
 
 class JWTAuth {
 
-    public static function generateAuthToken(UserModel $user) : object{
+    public static function generateAuthToken(UserModel $user) : string{
         $time = time();
         $token = [
             "iat" => $time,

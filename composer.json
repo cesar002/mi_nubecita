@@ -8,7 +8,8 @@
             "Models\\": "src/models",
             "Services\\": "src/services",
             "DataBase\\": "db/",
-            "Utils\\": "src/utils"
+            "Utils\\": "src/utils",
+            "HandleModel\\":"src/handelmodels"
         }
     }
 }

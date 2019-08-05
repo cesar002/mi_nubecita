@@ -5,11 +5,12 @@ use Controllers\RegistroUsuarioController;
 
 session_start();
 
-if(!isset($_SESSION["email_usuario"])){
+if(!isset($_SERVER['HTTP_AUTORIZACION_TOKEN'])){
     header("Sesión existente", true, 503);
     echo json_encode(["status" => 3]);
     return;
 }
+
 
 $method = $_SERVER["REQUEST_METHOD"];
 
@@ -43,24 +44,15 @@ if($method == "POST"){
     switch($result["status"]){
         case 1:
             header("Exitoso", true, 200);
-            echo json_encode([
-                "status" => 1,
-                "mensaje" => $result["mensaje"]
-            ]);
+            echo json_encode($result);
         break;
         case 2:
             header("Datos ya existentes", true, 409);
-            echo json_encode([
-                "status" => 2,
-                "mensaje" => $result["mensaje"]
-            ]);
+            echo json_encode($result);
         break;
         case 3:
             header("Server error", true, 500);
-            echo json_encode([
-                "status" => 0,
-                "mensake" => $result["mensaje"]
-            ]);
+            echo json_encode($result);
         break;
         default:
     }

@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Services\LogService;
+use Services\EncryptService;
 use Services\InitFileData;
 use DataBase\DBController;
 use Models\UserModel;
@@ -37,7 +38,7 @@ class UploadStorageController{
     public function createCloudeStorageUser(UserModel $user) : bool{
         try{
             $hashNameFolder = hash("ripemd160", $user->getEmail());
-            $idUser = $user->getIdUser();
+            $idUser = EncryptService::decrypt($user->getIdUser());
 
             mkdir($this->pathStorage.$hashNameFolder, 0777);
 
@@ -71,7 +72,7 @@ class UploadStorageController{
         try{
             $this->dbConnector = new DBController();
 
-            $idCloud = $user->getCloudStorageID();
+            $idCloud = EncryptService::decrypt($user->getCloudStorageID());
 
             if($pathStorage == "root"){
                 $pathFolder = $this->pathStorage.$user->getCloudStorageName()."\\$folderName";
@@ -198,7 +199,7 @@ class UploadStorageController{
      * @return integer
      */
     private function getIdCarpetaUsuario(UserModel $user, string $pathFolder) : int{
-        $idUser = $user->getIdUser();
+        $idUser = EncryptService::decrypt($user->getIdUser());
         $sqlQuery = "SELECT cu.id_carpeta FROM usuarios AS us
                         INNER JOIN nubes_usuarios AS nu ON nu.id_usuario = us.id_usuario
                         INNER JOIN carpetas_usuarios AS cu ON cu.id_nube = nu.id_nube

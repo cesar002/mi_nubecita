@@ -3,9 +3,12 @@
 namespace Controllers;
 
 use DataBase\DBController;
+use Controllers\UploadStorageController;
 use Controllers\TokensController;
 use Services\SendEmail;
 use Services\TokenGenerator;
+use HandleModel\UserModelHandle;
+use Models\UserModel;
 
 class RegistroUsuarioController{
     /**
@@ -47,10 +50,19 @@ class RegistroUsuarioController{
 
             $this->dbConector->execSQLQuery("INSERT INTO limites_usuarios_almacenaje(id_usuario, id_limite) VALUES ($idInserted, 1)");
 
+            $userModel = UserModelHandle::generateUserModelByID($idInserted);
+            if(is_null($userModel)){
+                throw new \Exception("Error al crear el modelo del usuario");
+            }
+
+            if(!$this->crearCarpetaCloud($userModel)){
+                throw new \Exception("Error al crear la carpeta de almacenamiento");
+            }
+
             $token = TokenGenerator::generateOpenSSLToken(10);
             $tokenController = new TokensController();
             
-            if(!$tokenController->registrarTokenVerificadorCuenta($token, $idInserted, $correo)){
+            if(!$tokenController->registrarTokenVerificadorCuenta($token, $userModel)){
                 throw new \Exception("Error al registrar el token de verificación");
             }
 
@@ -106,6 +118,18 @@ class RegistroUsuarioController{
         }catch(\Exception $e){
             return false;
         }
+    }
+
+    /**
+     * Crea la carpeta de almacenamiento del usuario registrado
+     *
+     * @param UserModel $userModel
+     * @return boolean
+     */
+    private function crearCarpetaCloud(UserModel $userModel) : bool{
+        $cloudStorageController = new UploadStorageController();
+
+        return $cloudStorageController->createCloudeStorageUser($userModel);
     }
 
 }

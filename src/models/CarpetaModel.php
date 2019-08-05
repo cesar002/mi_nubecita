@@ -9,24 +9,28 @@ class CarpetaModel{
     private $pathCarpeta;
     private $fechaCreacion;
 
-    public function construir(int $idCarpeta, int $idNube, string $nombreCarpeta, string $pathCarpeta, string $fechaCreacion){
+    public function construir(String $idCarpeta, string $idNube, string $nombreCarpeta, string $pathCarpeta, string $fechaCreacion){
         $this->idCarpeta =$idCarpeta;
-        $this->idNube;
+        $this->idNube = $idNube;
         $this->nombreCarpeta = $nombreCarpeta;
         $this->pathCarpeta = $pathCarpeta;
-        $this->fechaCreacion;
+        $this->fechaCreacion = $fechaCreacion;
     }
 
-    public function setIdCarpeta(int $idCarpeta):void{
+    public function setIdCarpeta(string $idCarpeta):void{
         $this->idCarpeta = $idCarpeta;
     }
 
-    public function getIdCarpeta() : int{
+    public function getIdCarpeta() : string{
         return $this->idCarpeta;
     }
 
-    public function setIdNube(int $idNube) : void{
+    public function setIdNube(string $idNube) : void{
         $this->idNube = $idNube;
+    }
+
+    public function getIdNube() : string{
+        return $this->idNube;
     }
     
     public function setNombreCarpeta(string $nombreCarpeta) : void{
@@ -55,11 +59,11 @@ class CarpetaModel{
 
     public function toArray() : array{
         return [
-            "id_carpeta" => $this->idCarpeta,
-            "id_nube" => $this->idNube,
-            "nombre_carpeta" => $this->nombreCarpeta,
-            "path_carpeta" => $this->pathCarpeta,
-            "fecha_creacion" => $this->fechaCreacion,
+            "idCarpetaHash" => $this->idCarpeta,
+            "idNubeHash" => $this->idNube,
+            "nombreCarpeta" => $this->nombreCarpeta,
+            "pathCarpeta" => $this->pathCarpeta,
+            "fechaCreacion" => $this->fechaCreacion,
         ];
     }
 

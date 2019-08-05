@@ -89,13 +89,13 @@ class ArchivoEliminadoModel{
 
     public function toArray() : array{
         return[
-            "id_archivo_eliminado" => $this->idArchivoEliminado,
-            "id_papelera" => $this->idPapelera,
-            "id_archivo" => $this->idArchivo,
-            "fecha_borrado_temp" => $this->fechaBorradoTemp,
-            "borrado_temp" => $this->borradoTemp,
-            "fecha_borrado_def" => $this->fechaBorradoDef,
-            "borrado_def" => $this->borradoDef,
+            "idArchivoEliminado" => $this->idArchivoEliminado,
+            "idPapelera" => $this->idPapelera,
+            "idArchivo" => $this->idArchivo,
+            "fechaBorradoTemp" => $this->fechaBorradoTemp,
+            "borradoTemp" => $this->borradoTemp,
+            "fechaBorradoDef" => $this->fechaBorradoDef,
+            "borradoDef" => $this->borradoDef,
             "activo" => $this->activo,
         ];
     }
