@@ -7,6 +7,9 @@ use Models\CarpetaModel;
 use Database\DBController;
 use Services\EncryptService;
 
+/**
+ * Clase estatica ayudante que retorna objetos de tipo CarpetaModelHandle ya construidos, en individual o en array
+ */
 class CarpetaModelHandle{
 
     /**
@@ -16,7 +19,7 @@ class CarpetaModelHandle{
      * modelo de usuario
      * @return array|null
      */
-    public static function getListCarpetaModelRoot(UserModel $user) : ?array{
+    public static function getListCarpetaModelInRoot(UserModel $user) : ?array{
         $idUsuario = EncryptService::decrypt($user->getIdUser());
         $sql = "SELECT cu.* FROM carpetas_usuarios AS cu
                     INNER JOIN nubes_usuarios AS nu ON nu.id_nube = cu.id_nube

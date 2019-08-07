@@ -7,7 +7,7 @@ use Database\DBController;
 use Services\EncryptService;
 
 /**
- * Clase estatica que permite generar una instancia de usermodel
+ * Clase estatica ayudante que retorna objetos de tipo UserModel ya construidos, en individual o en array
  */
 class UserModelHandle{
 

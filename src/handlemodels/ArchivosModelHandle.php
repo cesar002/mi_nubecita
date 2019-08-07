@@ -1,12 +1,15 @@
 <?php
 
-namespace HandelModel;
+namespace HandleModel;
 
 use Models\UserModel;
 use Models\ArchivoModel;
 use Database\DBController;
 use Services\EncryptService;
 
+/**
+ * Clase estatica ayudante que retorna objetos de tipo ArchivoModel ya construidos, en individual o en array
+ */
 class ArchivosModelHandle{
 
     /**

@@ -2,7 +2,7 @@
 namespace Controllers;
 
 use DataBase\DBController;
-use Services\UserModelGenerator;
+use HandleModel\UserModelHandle;
 use Models\UserModel;
 use Services\JWTAuth;
 
@@ -42,7 +42,15 @@ class LoginController{
                 ];
             }
 
-            $user = UserModelGenerator::generateUserModel($email, $password);
+            $user = UserModelHandle::generateUserModel($email, $password);
+
+            if(is_null($user)){
+                return[
+                    "status" => 2,
+                    "mensaje" => "Sin datos para la sesión"
+                ];
+            }
+
             $token = JWTAuth::generateAuthToken($user);
             
             return[

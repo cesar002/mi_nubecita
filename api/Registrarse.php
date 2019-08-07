@@ -1,15 +1,18 @@
 <?php
 require('../vendor/autoload.php');
 
+use Services\JWTAuth;
 use Controllers\RegistroUsuarioController;
 
-session_start();
+$headers = apache_request_headers();
 
-if(!isset($_SERVER['HTTP_AUTORIZACION_TOKEN'])){
-    header("Sesión existente", true, 503);
+if(!isset($headers['AUTORIZACION_TOKEN'])){
+    header("sin token de verificación", true, 503);
     echo json_encode(["status" => 3]);
     return;
 }
+
+$jwtToken = $headers['AUTORIZACION_TOKEN'];
 
 
 $method = $_SERVER["REQUEST_METHOD"];
@@ -18,6 +21,12 @@ if($method == "POST"){
     $email = $_POST["email"];
     $pass = $_POST["pass"];
     $repeat_pass = $_POST["repeat_pass"];
+
+    if(JWTAuth::checkAuthToken($jwtToken)){
+        header("sesión ya creada", true, 503);
+        echo json_encode(["status" => 2, "mensaje" => "sesión ya establecida"]);
+        return;
+    }
 
     if(empty($email) || empty($pass)){
         header("Sin datos", true, 400);

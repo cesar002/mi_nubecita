@@ -18,7 +18,7 @@ class UserModel{
         $this->cloudStorageID = $cloudStorageID;
         $this->limiteAlmacenaje = $limiteAlmacenaje;
         $this->tipoLimite = $tipoLimite;
-        $this->idPapelera;
+        $this->idPapelera = $idPapelera;
     }
 
     public function setIdUser(string $idUser) : void{
@@ -81,12 +81,24 @@ class UserModel{
         return [
             "idUser" => $this->idUser,
             "email" => $this->email,
-            "cloudStoreName" => $this->cloudStorageNamel,
+            "cloudStoreName" => $this->cloudStorageName,
             "cloudeStoreId" => $this->cloudStorageID,
-            "limite almacenaje" => $this->limiteAlmacenaje,
+            "limiteAlmacenaje" => $this->limiteAlmacenaje,
             "tipoLimite" => $this->tipoLimite,
             "idPapelera" => $this->idPapelera,
         ];
+    }
+
+    public function arrayToObject(array $userModelArray) : ?UserModel{
+        if(!isset($userModelArray["idUser"]) || !isset($userModelArray["email"]) || !isset($userModelArray["cloudStoreName"]) || !isset($userModelArray["cloudeStoreId"]) || !isset($userModelArray["limiteAlmacenaje"]) || !isset($userModelArray["tipoLimite"]) || !isset($userModelArray["idPapelera"])){
+           return null; 
+        }
+
+        $userModel = new UserModel();
+        $userModel->construir($userModelArray["idUser"], $userModelArray["email"], $userModelArray["cloudStoreName"], $userModelArray["cloudeStoreId"], $userModelArray["limiteAlmacenaje"], $userModelArray["tipoLimite"], $userModelArray["idPapelera"]);
+
+        return $userModel;
+
     }
 
 

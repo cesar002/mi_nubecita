@@ -2,12 +2,10 @@
 
 namespace Services;
 
-use Utils\constants;
+use Utils\DevelopConstants;
 
 class EncryptService{
-    private static $secretKey =  KEY_ENCRYPT_SERVICE;
-    private static $iv = IV;
-
+    
     public static function encrypt(string $text) : string{
         return self::encrypt_decrypt('encrypt', $text);
     }
@@ -20,10 +18,10 @@ class EncryptService{
         $output = false;
         $encrypt_method = "AES-256-CBC";
         // hash
-        $key = hash('sha256', self::$secretKey);
+        $key = hash('sha256', DevelopConstants::$KEY_ENCRYPT_SERVICE);
         
         // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
-        $iv = substr(hash('sha256', self::$iv), 0, 16);
+        $iv = substr(hash('sha256', DevelopConstants::$IV), 0, 16);
         if ( $action == 'encrypt' ) {
             $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
             $output = base64_encode($output);

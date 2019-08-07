@@ -2,23 +2,31 @@
 require('../vendor/autoload.php');
 // session_start();
 
+use Services\JWTAuth;
 use Controllers\LoginController;
 $login = new LoginController();
 
+$headers = apache_request_headers();
 
-if(!isset($_SERVER['HTTP_AUTORIZACION_TOKEN'])){
+if(!isset($headers['AUTORIZACION_TOKEN'])){
     header("Sesión existente", true, 503);
     echo json_encode(["status" => 3]);
     return;
 }
 
-$jwtToken = $_SERVER['HTTP_AUTORIZACION_TOKEN'];
+$jwtToken = $headers['AUTORIZACION_TOKEN'];
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     if(!isset($_POST["email"]) || !isset($_POST["password"])){
         header("Datos inexistentes", true, 406);
         echo json_encode(["status" => 2, "mensaje" => "Falta información"]);
+        return;
+    }
+
+    if(JWTAuth::checkAuthToken($jwtToken)){
+        header("Sesión ya existente", true, 406);
+        echo json_encode(["status" => 2, "mensaje" => "Sesión ya existente"]);
         return;
     }
 

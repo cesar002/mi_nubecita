@@ -4,6 +4,7 @@ namespace Services;
 
 use Firebase\JWT\JWT;
 use Models\UserModel;
+use Services\DevelopConstants;
 
 class JWTAuth {
 
@@ -12,20 +13,30 @@ class JWTAuth {
         $token = [
             "iat" => $time,
             "exp" => $time + (60*60),
+            "aud" => self::Aud(),
             "data" => $user,
         ];  
 
-        $jwtToken = JWT::encode($token, KEY_JWT);
+        $jwtToken = JWT::encode($token, DevelopConstants::$KEY_JWT);
 
         return $jwtToken;
     }
 
-    public static function checkAuthToken(object $jwtToken) : bool{
+    public static function checkAuthToken(string $jwtToken) : bool{
         if(empty($jwtToken)){
             return false;
         }
 
-        $decode = JWT::decode($jwtToken, KEY_JWT, array('HS256'));
+        $decode = null;
+
+        try{
+            $decode = JWT::decode($jwtToken, DevelopConstants::$KEY_JWT, array('HS256'));
+        }catch(\Exception $e){
+            return false;
+        }catch(\Error $err){
+            return false;
+        }
+        
 
         if($decode->aud !== self::Aud()){
             return false;
@@ -34,13 +45,13 @@ class JWTAuth {
         return true;
     }
 
-    public static function getDataAuthToken(object $jwtToken) : ?object {
+    public static function getDataAuthToken(object $jwtToken) : ?UserModel {
         if(empty($jwtToken)){
             return null;
         }
 
         try{
-            $decode = JWT::decode($jwtToken, KEY_JWT, array('HS256'));
+            $decode = JWT::decode($jwtToken, DevelopConstants::$KEY_JWT, array('HS256'));
 
             return $decode->data;
         }catch(\Error $err){
@@ -50,15 +61,15 @@ class JWTAuth {
         }
     }
 
-    public static function getDataArrayAuthToken(object $jwtToken) : ?object {
+    public static function getDataArrayAuthToken(object $jwtToken) : ?array {
         if(empty($jwtToken)){
             return null;
         }
 
         try{
-            $decode = JWT::decode($jwtToken, KEY_JWT, array('HS256'));
+            $decode = JWT::decode($jwtToken, DevelopConstants::$KEY_JWT, array('HS256'));
 
-            return json_decode($decode->data);
+            return $decode->data->toArray();
         }catch(\Error $err){
             return null;
         }catch(\Exception $e){

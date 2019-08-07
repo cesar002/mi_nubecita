@@ -12,7 +12,7 @@ class ArchivoEliminadoModel{
     private $borradoDef;
     private $activo;
 
-    public function construir(int $idArchivoEliminado, int $idPapelera, int $idArchivo, string $fechaBorradoTemp, bool $borradoTemp, string $fechaBorradoDef, bool $borradoDef, bool $activo){
+    public function construir(string $idArchivoEliminado, string $idPapelera, string $idArchivo, string $fechaBorradoTemp, bool $borradoTemp, string $fechaBorradoDef, bool $borradoDef, bool $activo){
         $this->idArchivoEliminado = $idArchivoEliminado;
         $this->idPapelera = $idPapelera;
         $this->idArchivo = $idArchivo;
@@ -23,27 +23,27 @@ class ArchivoEliminadoModel{
         $this->activo = $activo;
     }
 
-    public function setIdArchivoEliminado(int $idArchivoEliminado) : void{
+    public function setIdArchivoEliminado(string $idArchivoEliminado) : void{
         $this->idArchivoEliminado = $idArchivoEliminado;
     }
 
-    public function getIdArchivoEliminado() : int{
+    public function getIdArchivoEliminado() : string{
         return $this->idArchivoEliminado;
     }
 
-    public function setIdPapelera(int $idPapelera) : void{
+    public function setIdPapelera(string $idPapelera) : void{
         $this->idPapelera = $idPapelera;
     }
 
-    public function getIdPapelera() : int{
+    public function getIdPapelera() : string{
         return $this->idPapelera;
     }
 
-    public function setIdArchivo(int $idArchivo) : void{
+    public function setIdArchivo(string $idArchivo) : void{
         $this->idArchivo = $idArchivo;
     }
 
-    public function getIdArchivo() : int{
+    public function getIdArchivo() : string{
         return $this->idArchivo;
     }
 
